@@ -1,0 +1,36 @@
+﻿@model List<GameDemo.Models.Msg>
+@using GameDemo.Models
+@{
+    ViewBag.Title = "news";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content">
+	<div id="clink">
+		<img src="~/img/icon_home2.png"/>
+		<a href="/Home/Index">首页</a> >>
+		<a href="/Home/News">新闻公告</a>
+	</div>
+
+	<div id="list">
+		@foreach (Msg item in Model)
+		{
+		<dl>
+			<dt>
+				<img src="@item.MsgPhoto" />
+			</dt>
+
+			<dd id="title"><a href="/Msg/Detail?MsgId=@item.MsgID">@item.MsgTitle</a></dd>
+			<dd id="txt"><a href="/Msg/Detail?MsgId=@item.MsgID">@item.MsgText</a></dd>
+
+			<dd id="type">
+				<img src="~/img/icon_author.png" /><span>@item.Account.AccountName</span>
+				<img src="~/img/icon_clock.png" /><span>@item.MsgTime</span>
+				<img src="~/img/icon_hit.png" /><span>@item.MsgHit</span>
+			</dd>
+		</dl>
+		}
+		<div style="clear:both;"></div>
+	</div>
+</div>
+

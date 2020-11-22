@@ -1,0 +1,123 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>无尽征途注册</title>
+	<link href="/css/global.css" rel="stylesheet" />
+	<script src="~/Scripts/jquery-3.3.1.js"></script>
+	<script src="~/Scripts/jquery.validate.js"></script>
+	@*先引入jquery的js文件，再引入jquery.validate文件
+		才能正常的实现验证
+	*@
+</head>
+<body>
+	<!--页眉-->
+	<div id="hlogo">
+		<img src="/img/logo2.png" />
+		<p>创建账号</p>
+	</div>
+	<div id="login">
+		@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id="RegisterForm", enctype = "multipart/form-data" }))
+		{
+			<div class=" block1">创建您的游戏通行证，开启您的冒险旅程。</div>
+			@Html.TextBox("AccountName", "", new { @class = "input-block-small", maxlength = "320", placeholder = "账号" })
+			@Html.TextBox("AccountPwd", "", new { @class = "input-block-small", maxlength = "16", placeholder = "密码" })
+			@Html.TextBox("AccountPwd2", "", new { @class = "input-block-small", maxlength = "16", placeholder = "确认密码" })
+			@Html.TextBox("AccountEmail", "", new { @class = "input-block-small", maxlength = "16", placeholder = "电子邮箱" })
+			<div class="block1">
+				性别：
+				@Html.RadioButton("AccountSex", "1", true, new { @class = "input-radio" }) 男
+				@Html.RadioButton("AccountSex", "0", false, new { @class = "input-radio" }) 女
+			</div>
+			<div class="block1">
+				@Html.CheckBox("agree", true, new { @class = "input-checkbox" })
+				我已阅读并接受隐私政策
+			</div>
+			<input type="submit" id="submit" value="免 费 注 册" data-loading-text="" tabindex="1" />
+			<div style="color: red">
+				@Html.ValidationSummary()
+			</div>
+		}
+		<div style="color: red">@TempData["msg"]</div>
+	</div>
+	<div id="footer">
+		<p>
+			Wujinkeji.net EULA | 隐私 | 法律条款 | 著作权侵权 |
+		</p>
+		<p>©2020科技有限公司版权所有。</p>
+	</div>
+
+	<script>
+		@*
+		在页面加载的时候，执行JS脚本完成对本页面中相关标签输入内容的验证,
+		使用Jquery插件方式实现验证
+		*@
+		$(function () {
+			//验证的内容是表单中的标签，标签输入的内容需要符合我们制定的规则
+			@*
+	   			rules: {},		规则
+				message: {},	访问错误的信息
+				success: {}		验证成功的方法
+			*@
+
+			$("#RegisterForm").validate({
+				rules: {
+					//写入要校验的标签的name属性
+					AccountName: {
+						required: true,
+						minlength: 4,
+						maxlength:18,
+					},
+
+					AccountPwd:{
+						required: true,
+						minlength: 6,
+						maxlength: 18,
+					},
+					
+					AccountPwd2:{
+						equalTo:"#AccountPwd",
+					},
+
+					AccountEmail:{
+						required: true,
+						email: true,
+					},
+					agree:{
+						required: true,
+					},
+				},
+				message: {
+					AccountName: {
+						required: "不能为空",
+						minlength: "用户名最少输入4个字符",
+						maxlength: "用户名最大输入18个字符"
+					},
+					AccountPwd: {
+						required: "不能为空",
+						minlength: "密码最少输入6个字符",
+						maxlength: "密码最大输入18个字符"
+					},
+					AccountPwd2: {
+						equalTo:"密码不一致"
+					},
+					AccountEmail: {
+						required: "不能为空",
+						email:"邮箱的格式不正确"
+
+					},
+					agree: {
+						required:"必须勾选协议才能注册"
+					}
+				},
+				success: {}
+			})
+		});
+
+	</script>
+</body>
+</html>

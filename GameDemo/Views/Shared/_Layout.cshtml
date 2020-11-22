@@ -1,0 +1,94 @@
+﻿@using GameDemo.Models
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>无尽征途 - @ViewBag.Title </title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+	<link href="/css/global.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="all">
+		<!--页眉-->
+		<div id="head">
+			<div id="user">
+				@if (Session["login"] == null)
+				{
+					<span>
+						@Html.ActionLink("登陆","Login","Account")|
+						@Html.ActionLink("注册","Register","Account")
+					</span>
+				}
+				else
+				{
+					string uname = ((Account)Session["login"]).AccountName;
+					<span>
+						@uname 欢迎您!
+						@Html.ActionLink("信息管理", "Index", "Msg")
+						@Html.ActionLink("退出", "Quite", "Account")
+					</span>
+				}
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div id="middle">
+			<div id="bannel">
+				<!--菜单-->
+				<div id="menu">
+					<ul>
+						<li>
+							@if (ViewBag.Title == "首页")
+							{<a href="/Home/Index" class="activemenu"><img src="/img/logo1.png" style="height:30px;" /></a>}
+							else
+							{ <a href="/Home/Index"><img src="/img/logo1.png" style="height:30px;" /></a>}
+						</li>
+						<li>
+							@if (ViewBag.Title == "新闻公告")
+							{<a href="/Home/News" class="activemenu">新闻公告</a>}
+							else
+							{ <a href="/Home/News">新闻公告</a>}
+						</li>
+						<li>
+							@if (ViewBag.Title == "英雄档案")
+							{<a href="/Home/Heros" class="activemenu">英雄档案</a>}
+							else
+							{ <a href="/Home/Heros">英雄档案</a>}
+						</li>
+						<li>
+							@if (ViewBag.Title == "视频图片")
+							{<a href="/Home/Videos" class="activemenu">视频图片</a>}
+							else
+							{ <a href="/Home/Videos">视频图片</a>}
+						</li>
+						<div style="clear:both;"></div>
+					</ul>
+				</div>
+			</div>
+			<!--信息列表-->
+			@RenderBody()
+		</div>
+		<!--页脚-->
+		<div id="footer">
+			<div>
+				<div id="flogo">
+					<img src="/img/logo2.png" />
+				</div>
+				<div id="cfooter">
+					©2018 科技有限公司版权所有 | 新广出审[2018]377号
+					<hr style="height:1px;border:none;border-top:1px solid #808080;" />
+					<p> 抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。</p>
+					<p> 适度游戏益脑，沉迷游戏伤身。合理安排时间，享受健康生活。</p>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+	</div>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+</body>
+</html>

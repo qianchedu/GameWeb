@@ -1,0 +1,65 @@
+﻿@model GameDemo.Models.Msg
+@using GameDemo.Models
+
+@{
+    ViewBag.Title = "编辑信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="content">
+	<div id="clink">
+		<img src="~/img/icon_home2.png"/>
+		<a href="/Home/Index">首页</a>
+		<a href="/Msg/Index">管理首页</a>
+		>> 信息修改
+	</div>
+
+	<div>
+		@Html.HiddenFor(t => t.MsgID)
+		@Html.HiddenFor(t => t.AccountID)
+		@Html.HiddenFor(t => t.MsgPhoto)
+		@Html.HiddenFor(t => t.MsgHit)
+
+		@using (Html.BeginForm("edit", "msg", FormMethod.Post, new { enctype = "multipart/form-data" }))
+		{
+			<table class="table table-hover">
+				<tr>
+					<td>作者</td>
+					<td>@Html.DisplayFor(t => t.Account.AccountName)</td>
+				</tr>
+
+				<tr>
+					<td>文章标题</td>
+					<td>@Html.TextBoxFor(t => t.MsgTitle)</td>
+				</tr>
+
+				<tr>
+					<td>文章内容</td>
+					<td>@Html.TextBoxFor(t => t.MsgText)</td>
+				</tr>
+
+				<tr>
+					<td>文章类型</td>
+					<td>@Html.DropDownListFor(t => t.MsgType, new SelectList(new[] { "新闻信息", "视频图片", "英雄档案" }))</td>
+				</tr>
+
+				<tr>
+					<td>图片</td>
+					<td><img src="@Model.MsgPhoto" style="height:300px;width:300px" /></td>
+				</tr>
+
+				<tr>
+					<td>修改图片</td>
+					<td><input type="file" name="PhotoFile" /></td>
+				</tr>
+
+			</table>
+
+			<input type="submit" value="修改" class="btn btn-default" />
+		}
+
+	</div>
+
+</div>
